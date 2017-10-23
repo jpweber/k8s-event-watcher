@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: event-watcher
+  namespace: mgmt
+  labels:
+    app: event-watcher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: event-watcher
+  template:
+    metadata:
+      labels:
+        app: event-watcher
+    spec:
+      containers:
+        - image: docker.io/jpweber/event-watcher:0.3.0
+          imagePullPolicy: Always
+          name: event-watcher
+          resources:
+            limits:
+              cpu: 100m
+              memory: 300Mi
+            requests:
+              cpu: 100m
+              memory: 300Mi
+      nodeSelector:
+        environment: mgmt
